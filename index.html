@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#212121" media="(prefers-color-scheme: dark)" />
+    <meta name="description" content="Telegram Web login screen visual recreation." />
+    <title>Telegram</title>
+    <link rel="icon" type="image/svg+xml" href="./telegram-logo.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="login" id="login">
+      <section class="qr-screen" id="qr-screen" aria-labelledby="login-heading">
+        <div class="qr-content">
+          <div class="qr-wrap is-loading">
+            <!-- the generator fills this image as soon as the demo qr is ready -->
+            <img
+              class="qr-code"
+              id="qr-code"
+              alt=""
+              aria-hidden="true"
+              width="280"
+              height="280"
+            />
+            <span class="qr-logo" id="qr-logo" aria-hidden="true">
+              <svg class="qr-fallback" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M22.44 2.42c.31-.13.64.14.56.47l-3.62 17.1c-.08.37-.51.53-.8.3l-5.73-4.23-2.93 2.82c-.25.25-.67.07-.67-.28v-4.06l10.55-9.56c.24-.21-.05-.57-.3-.4L6.55 13.1l-4.7-1.47c-.45-.14-.46-.77-.02-.93L22.44 2.42z"
+                />
+              </svg>
+            </span>
+          </div>
+          <h1 id="login-heading">Log in to Telegram by QR Code</h1>
+
+          <ol class="steps">
+            <li>
+              <span class="step-number" aria-hidden="true">1</span>
+              <span data-i18n="step1">Open Telegram on your phone</span>
+            </li>
+            <li>
+              <span class="step-number" aria-hidden="true">2</span>
+              <span data-i18n="step2">Go to <b>Settings</b> &gt; <b>Devices</b> &gt; <b>Add Device</b></span>
+            </li>
+            <li>
+              <span class="step-number" aria-hidden="true">3</span>
+              <span data-i18n="step3">Point your phone at this screen to confirm login</span>
+            </li>
+          </ol>
+
+          <nav class="actions" aria-label="Login options">
+            <button type="button" id="phone-option" data-i18n="phoneOption">
+              LOG IN BY PHONE NUMBER
+            </button>
+            <button type="button" id="passkey-option" data-i18n="passkeyOption">
+              LOG IN WITH PASSKEY
+            </button>
+            <button type="button" id="language-option">ПРОДОЛЖИТЬ НА РУССКОМ</button>
+          </nav>
+        </div>
+      </section>
+
+      <section class="phone-screen" id="phone-screen" hidden aria-labelledby="phone-heading">
+        <div class="phone-content">
+          <img class="telegram-mark" src="./telegram-logo.svg" alt="" width="160" height="160" />
+          <h1 id="phone-heading">Telegram</h1>
+          <p class="phone-description" data-i18n="phoneDescription">
+            Please confirm your country code and enter your phone number.
+          </p>
+          <form id="phone-form" novalidate>
+            <div class="country-picker">
+              <div class="phone-input-group touched" id="country-group">
+                <input
+                  class="form-control"
+                  id="country"
+                  name="country"
+                  type="text"
+                  autocomplete="off"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-controls="country-menu"
+                  aria-expanded="false"
+                  value="🇷🇺 Russian Federation"
+                />
+                <label for="country" data-i18n="country">Country</label>
+                <span class="select-chevron" aria-hidden="true"></span>
+              </div>
+              <div
+                class="country-menu"
+                id="country-menu"
+                role="listbox"
+                aria-label="Countries"
+              ></div>
+            </div>
+            <div class="phone-input-group touched" id="phone-group">
+              <input
+                class="form-control"
+                id="phone"
+                name="phone"
+                type="text"
+                inputmode="tel"
+                autocomplete="off"
+                dir="auto"
+                value="+7 "
+              />
+              <label for="phone" data-i18n="phoneNumber">Your phone number</label>
+            </div>
+            <label class="keep-signed-in">
+              <input type="checkbox" checked />
+              <span class="checkbox-mark" aria-hidden="true">
+                <svg viewBox="0 0 20 20" focusable="false">
+                  <path
+                    d="m3 10.1 4.3 4.3L17 4.8"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+              <span data-i18n="keepSignedIn">Keep me signed in</span>
+            </label>
+            <button class="next-button" id="next-button" type="button" data-i18n="next" hidden>
+              NEXT
+            </button>
+            <button class="back-button" id="back-button" type="button" data-i18n="back">
+              LOG IN BY QR CODE
+            </button>
+            <button
+              class="phone-text-button"
+              id="phone-passkey"
+              type="button"
+              data-i18n="phonePasskey"
+            >
+              LOG IN WITH PASSKEY
+            </button>
+            <button
+              class="phone-text-button"
+              id="phone-language"
+              type="button"
+              data-i18n="phoneLanguage"
+            >
+              ПРОДОЛЖИТЬ НА РУССКОМ
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <!-- all scripts r local; this preview doesnt call tg -->
+    <script src="./countries.js"></script>
+    <script src="./qr-code-styling.js"></script>
+    <script src="./telegram-qr-sdk.js"></script>
+    <script src="./lottie.js"></script>
+    <script src="./qr-plane-data.js"></script>
+    <script src="./phone-format.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

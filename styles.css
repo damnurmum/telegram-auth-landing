@@ -1,0 +1,686 @@
+/* theme colors here. the layout just borrows these values */
+:root {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Roboto",
+    Arial,
+    sans-serif;
+  color: #000;
+  background: #fff;
+  --background: #fff;
+  --text: #000;
+  --secondary: #707579;
+  --primary: #3390ec;
+  --primary-hover: #2682dc;
+  --primary-shade-rgb: 74, 149, 214;
+  --input-border: #dadce0;
+  --menu-background: rgba(255, 255, 255, 0.733);
+  --menu-hover: rgba(0, 0, 0, 0.06667);
+  --menu-shadow: rgba(114, 114, 114, 0.25);
+  --checkbox-hover: #f4f4f5;
+  --scrollbar-thumb: #5a5a5a4d;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    color: #fff;
+    background: #212121;
+    --background: #212121;
+    --text: #fff;
+    --secondary: #aaa;
+    --primary: #8774e1;
+    --primary-hover: #7564cf;
+    --primary-shade-rgb: 123, 113, 198;
+    --input-border: #5b5b5a;
+    --menu-background: rgba(33, 33, 33, 0.867);
+    --menu-hover: rgba(0, 0, 0, 0.4);
+    --menu-shadow: rgba(16, 16, 16, 0.61);
+    --checkbox-hover: #2c2c2c;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+html,
+.qr-screen,
+.phone-screen,
+.country-menu {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.3s;
+}
+html:hover,
+html:focus-within,
+.qr-screen:hover,
+.qr-screen:focus-within,
+.phone-screen:hover,
+.phone-screen:focus-within,
+.country-menu:hover,
+.country-menu:focus-within {
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+html::-webkit-scrollbar,
+.qr-screen::-webkit-scrollbar,
+.phone-screen::-webkit-scrollbar,
+.country-menu::-webkit-scrollbar {
+  width: 6px;
+}
+html::-webkit-scrollbar-track,
+.qr-screen::-webkit-scrollbar-track,
+.phone-screen::-webkit-scrollbar-track,
+.country-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+html::-webkit-scrollbar-thumb,
+.qr-screen::-webkit-scrollbar-thumb,
+.phone-screen::-webkit-scrollbar-thumb,
+.country-menu::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 6px;
+}
+html:hover::-webkit-scrollbar-thumb,
+html:focus-within::-webkit-scrollbar-thumb,
+.qr-screen:hover::-webkit-scrollbar-thumb,
+.qr-screen:focus-within::-webkit-scrollbar-thumb,
+.phone-screen:hover::-webkit-scrollbar-thumb,
+.phone-screen:focus-within::-webkit-scrollbar-thumb,
+.country-menu:hover::-webkit-scrollbar-thumb,
+.country-menu:focus-within::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+
+.login {
+  height: 100vh;
+  height: 100dvh;
+  background: var(--background);
+  color: var(--text);
+  position: relative;
+  overflow: hidden;
+}
+
+/* each pane keeps its own scroll position, so switching views stays smooth */
+.qr-screen,
+.phone-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.is-entering {
+  animation: screen-fade-in 0.2s linear both;
+}
+.is-exiting {
+  animation: screen-fade-out 0.2s linear both;
+  pointer-events: none;
+}
+@keyframes screen-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes screen-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.qr-content {
+  width: 408px;
+  max-width: 100%;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 64px 24px 24px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* the generated qr swaps in underneath the animated plane */
+.qr-wrap {
+  width: 280px;
+  height: 280px;
+  flex: none;
+  position: relative;
+  background: #fff;
+  border-radius: 24px;
+  overflow: hidden;
+}
+.qr-wrap.is-loading {
+  opacity: 0;
+}
+.qr-wrap.is-revealing {
+  animation: qr-show 0.4s ease-in-out both;
+}
+@keyframes qr-show {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.qr-code {
+  display: block;
+  width: 280px;
+  height: 280px;
+  flex: none;
+}
+
+.qr-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #3390ec;
+  color: #fff;
+}
+
+.qr-logo svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 36px;
+  height: 36px;
+  transform: translate(-50%, -50%);
+}
+.qr-logo canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 54px !important;
+  height: 54px !important;
+  transform: translate(-50%, -50%);
+}
+.qr-logo.lottie-ready .qr-fallback {
+  display: none;
+}
+
+h1 {
+  width: 100%;
+  margin: 24px 0 16px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.steps {
+  align-self: stretch;
+  margin: 0;
+  padding: 0 28px;
+  list-style: none;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: 23px 1fr;
+  column-gap: 11px;
+  align-items: start;
+  margin: 0 0 12px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.steps li:last-child {
+  margin-bottom: 0;
+}
+
+.steps b {
+  font-weight: 500;
+}
+
+.step-number {
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.actions button,
+.back-button,
+.phone-text-button {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 28px;
+  background: transparent;
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 8px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    opacity 0.2s;
+}
+
+.actions button:hover,
+.back-button:hover,
+.phone-text-button:hover {
+  background: rgba(var(--primary-shade-rgb), 0.08);
+}
+.actions button:active,
+.back-button:active,
+.phone-text-button:active {
+  background: rgba(var(--primary-shade-rgb), 0.12);
+}
+.actions button:focus-visible,
+.back-button:focus-visible,
+.phone-text-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.button-ripple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(var(--primary-shade-rgb), 0.2);
+  pointer-events: none;
+  animation: button-ripple 0.55s ease-out forwards;
+}
+@keyframes button-ripple {
+  from {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(28);
+    opacity: 0;
+  }
+}
+
+.phone-content {
+  width: 408px;
+  max-width: 100%;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 109px 24px 24px;
+  text-align: center;
+}
+
+.phone-screen[hidden],
+.qr-screen[hidden],
+[hidden] {
+  display: none !important;
+}
+
+.telegram-mark {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 40px;
+  display: block;
+}
+
+.phone-screen h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+  line-height: 48px;
+}
+.phone-description {
+  margin: 0 0 48px;
+  color: var(--secondary);
+  font-size: 16px;
+  line-height: 21.6px;
+}
+.phone-screen form {
+  text-align: left;
+}
+.country-picker {
+  position: relative;
+}
+/* the labels float once a field has a value or gets focus */
+.phone-input-group {
+  height: 48px;
+  margin-bottom: 18px;
+  position: relative;
+}
+.phone-input-group label {
+  pointer-events: none;
+  transform-origin: 0;
+  position: absolute;
+  top: 11px;
+  left: 16px;
+  padding: 0 8px;
+  border-radius: 16px;
+  background: var(--background);
+  color: var(--secondary);
+  font-size: 16px;
+  line-height: 24px;
+  white-space: nowrap;
+  transition:
+    transform 0.15s ease-out,
+    color 0.15s ease-out;
+}
+.phone-input-group.touched label,
+.phone-input-group .form-control:focus + label {
+  transform: scale(0.75) translateY(-32px);
+}
+.phone-input-group .form-control {
+  display: block;
+  width: 100%;
+  height: 48px;
+  padding: 11px 18px;
+  border: 1px solid var(--input-border);
+  border-radius: 16px;
+  background: var(--background);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 20px;
+  outline: none;
+  appearance: none;
+  transition: border-color 0.15s;
+}
+.phone-input-group .form-control:hover {
+  border-color: var(--primary);
+}
+.phone-input-group .form-control:hover + label {
+  color: var(--primary);
+}
+.phone-input-group .form-control:focus {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+  caret-color: var(--primary);
+}
+.phone-input-group .form-control:focus + label {
+  color: var(--primary);
+}
+#country {
+  padding-right: 45px;
+}
+.select-chevron {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--secondary);
+  border-top: 0;
+  border-left: 0;
+  transform: scaleY(1) rotate(45deg);
+  transition:
+    border-color 0.2s,
+    transform 0.2s,
+    top 0.2s;
+  pointer-events: none;
+}
+.country-picker.open .select-chevron {
+  top: 21px;
+  border-color: var(--primary);
+  transform: scaleY(-1) rotate(45deg);
+}
+/* keep the country list above the form without pushing anything around */
+.country-menu {
+  position: absolute;
+  z-index: 20;
+  top: 66px;
+  left: 0;
+  width: 100%;
+  max-height: 376px;
+  padding: 4px 0;
+  overflow-y: auto;
+  border-radius: 16px;
+  background: var(--menu-background);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 8px 2px var(--menu-shadow);
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.95);
+  transform-origin: top;
+  pointer-events: none;
+  transition:
+    opacity 0.15s cubic-bezier(0.2, 0, 0.2, 1),
+    transform 0.15s cubic-bezier(0.2, 0, 0.2, 1),
+    visibility 0.15s;
+  scrollbar-width: thin;
+}
+.country-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  pointer-events: auto;
+}
+.country-row {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 8px);
+  min-height: 52px;
+  margin: 2px 4px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19.25px;
+  text-align: left;
+  white-space: nowrap;
+  transition:
+    background-color 0.15s,
+    transform 0.15s;
+}
+.country-row:hover,
+.country-row:focus-visible,
+.country-row.is-active {
+  background: var(--menu-hover);
+  outline: none;
+}
+.country-row:active {
+  transform: scale(0.98);
+}
+.country-flag {
+  display: inline-block;
+  flex: none;
+  width: 32px;
+  margin-right: 16px;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 44px;
+}
+.country-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 16px;
+}
+.country-code {
+  margin-left: auto;
+  padding-right: 4px;
+  opacity: 0.5;
+  font-weight: 400;
+}
+.country-empty {
+  padding: 18px;
+  text-align: center;
+  color: var(--secondary);
+  font-size: 14px;
+}
+.keep-signed-in {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding-left: 64px;
+  position: relative;
+  cursor: pointer;
+  font-size: 16px;
+}
+.keep-signed-in:hover {
+  border-radius: 16px;
+  background: var(--checkbox-hover);
+}
+.keep-signed-in input {
+  position: absolute;
+  opacity: 0;
+}
+.checkbox-mark {
+  position: absolute;
+  top: 50%;
+  left: 18px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--primary);
+  border-radius: 4px;
+  color: #fff;
+  transition:
+    background-color 0.1s,
+    border-color 0.1s;
+}
+.keep-signed-in input:checked + .checkbox-mark {
+  background: var(--primary);
+}
+.checkbox-mark svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+.keep-signed-in input:checked + .checkbox-mark svg {
+  opacity: 1;
+}
+.next-button {
+  display: block;
+  width: 100%;
+  height: 48px;
+  margin-top: 40px;
+  padding: 8px;
+  border: 0;
+  border-radius: 28px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+.next-button:hover {
+  background: var(--primary-hover);
+}
+.next-button:active {
+  transform: scale(0.99);
+}
+.next-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.phone-text-button {
+  display: block;
+  cursor: pointer;
+}
+#back-button {
+  margin-top: 40px;
+}
+.next-button:not([hidden]) + #back-button {
+  margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .qr-content {
+    padding: 96px 16px 16px;
+  }
+  .qr-wrap,
+  .qr-code {
+    width: 280px;
+    height: 280px;
+  }
+  .qr-screen h1 {
+    font-size: 20px;
+    line-height: 20px;
+    white-space: normal;
+  }
+  .steps {
+    padding: 0 28px;
+  }
+  .actions {
+    margin-top: 40px;
+  }
+  .phone-content {
+    padding: 96px 16px 16px;
+  }
+  .telegram-mark {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 28px;
+  }
+  .phone-screen h1 {
+    font-size: 20px;
+    line-height: 20px;
+  }
+  .phone-description {
+    font-size: 14px;
+    line-height: 18.9px;
+    margin-bottom: 40px;
+  }
+}
