@@ -13,7 +13,7 @@ This is a practice/portfolio project - an attempt to reproduce the look and feel
 - HTML5 / CSS3
 - Vanilla JavaScript
 - [qr-code-styling](https://github.com/kozakdenys/qr-code-styling) - stylized QR code rendering
-- Lottie — animations
+- Lottie - animations
 - Custom country list and phone number mask (`countries.js`, `phone-format.js`)
 
 ## Structure
