@@ -6,7 +6,7 @@ Live demo: https://telegram-auth-landing-lolz.onrender.com/
 
 ## About
 
-This is a practice/portfolio project — an attempt to reproduce the look and feel of Telegram's real login interface as closely as possible from a screenshot/reference. There is no real authentication, no data is sent to any server, and it does not integrate with the actual Telegram API. It's pure markup and animation work.
+This is a practice/portfolio project - an attempt to reproduce the look and feel of Telegram's real login interface as closely as possible from a screenshot/reference. There is no real authentication, no data is sent to any server, and it does not integrate with the actual Telegram API. It's pure markup and animation work.
 
 ## Tech stack
 
