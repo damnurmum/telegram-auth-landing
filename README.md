@@ -2,7 +2,7 @@
 
 A front-end clone of the Telegram Web login page: "Log in by QR code" and "Log in by phone number" tabs, country picker, and animations - built entirely with vanilla HTML/CSS/JS, no backend.
 
-Live demo: https://telegram-auth-landing-lolz.onrender.com/
+Live demo: https://damnurmum.github.io/telegram-auth-landing/
 
 ## About
 
